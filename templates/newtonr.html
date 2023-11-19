@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Newton-Raphson method</title>
+</head>
+<body>
+
+<h1>Newton-Raphson method</h1>
+
+<form action="/newtonr" method="post">
+    <label for="equation">Enter the equation:</label>
+    <input type="text" id="equation" name="equation" required>
+    <br>
+    <label for="derivate">Enter the first derivative:</label>
+    <input type="text" id="derivate" name="derivate" required>
+    <br>
+    <label for="x0">Enter 'x0' value:</label>
+    <input type="text" id="x0" name="x0" required>
+    <br>
+    <label for="tol">Enter tolerance:</label>
+    <input type="text" id="tol" name="tol" required>
+    <br>
+    <label for="max_iterations">Enter maximum iterations:</label>
+    <input type="text" id="max_iterations" name="max_iterations" required>
+    <br>
+    <input type="submit" value="Run Fixed Position Method">
+</form>
+
+{% if results %}
+    {% if results.error %}
+        <p style="color: red;">Error: {{ results.error }}</p>
+    {% else %}
+        <h2>Results:</h2>
+        {% if results.conclusion %}
+            <p>{{ results.conclusion }}</p>
+        {% endif %}
+        {% if results.iterations %}
+            <h2>Iterations:</h2>
+            <table border="1">
+                <tr>
+                    <th>Iteration</th>
+                    <th>xi</th>
+                    <th>fxi</th>
+                    <th>error</th>
+                </tr>
+                {% for iteration in results.iterations %}
+                    <tr>
+                        {% for value in iteration %}
+                            <td>{{ value }}</td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </table>
+        {% endif %}
+    {% endif %}
+{% endif %}
+
+</body>
+</html>
